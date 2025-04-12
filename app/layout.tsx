@@ -36,6 +36,6 @@ export const metadata = {
   title: "UCAFE",
   description: "Онлайн-меню, заказ и больше.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon1.png",
   },
 };
