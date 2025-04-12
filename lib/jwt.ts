@@ -19,7 +19,6 @@ export function verifyToken(token: string) {
 
 export async function getCurrentUser(req?: NextRequest) {
   try {
-    // Получаем cookies с использованием await
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 

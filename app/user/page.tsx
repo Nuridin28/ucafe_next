@@ -1,41 +1,45 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useTranslation } from "@/hooks/use-translation"
-import { FoodCard } from "@/components/food-card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useToast } from "@/hooks/use-toast"
-import { type FoodItem, getFoodRecommendations, getAllFood } from "@/lib/api"
+import { useEffect, useState } from "react";
+import { useTranslation } from "@/hooks/use-translation";
+import { FoodCard } from "@/components/food-card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
+import { getFoodRecommendations, getAllFood } from "@/lib/api";
+import { FoodItem } from "@/types/food";
 
 export default function UserDashboard() {
-  const [recommendations, setRecommendations] = useState<FoodItem[]>([])
-  const [allFood, setAllFood] = useState<FoodItem[]>([])
-  const [loading, setLoading] = useState(true)
-  const { t } = useTranslation()
-  const { toast } = useToast()
+  const [recommendations, setRecommendations] = useState<FoodItem[]>([]);
+  const [allFood, setAllFood] = useState<FoodItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [recommendationsData, allFoodData] = await Promise.all([getFoodRecommendations(), getAllFood()])
-        setRecommendations(recommendationsData)
-        setAllFood(allFoodData)
+        const [recommendationsData, allFoodData] = await Promise.all([
+          getFoodRecommendations(),
+          getAllFood(),
+        ]);
+        setRecommendations(recommendationsData);
+        setAllFood(allFoodData);
       } catch (error) {
         toast({
           title: t("dashboard.error"),
           description: t("dashboard.errorFetchingData"),
           variant: "destructive",
-        })
+        });
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [t, toast])
+    fetchData();
+  }, [t, toast]);
 
   if (loading) {
-    return <div className="flex justify-center p-8">{t("common.loading")}</div>
+    return <div className="flex justify-center p-8">{t("common.loading")}</div>;
   }
 
   return (
@@ -44,12 +48,16 @@ export default function UserDashboard() {
 
       <Tabs defaultValue="recommendations">
         <TabsList className="mb-4">
-          <TabsTrigger value="recommendations">{t("dashboard.recommendations")}</TabsTrigger>
+          <TabsTrigger value="recommendations">
+            {t("dashboard.recommendations")}
+          </TabsTrigger>
           <TabsTrigger value="all">{t("dashboard.allFood")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="recommendations" className="space-y-4">
-          <h2 className="text-xl font-semibold">{t("dashboard.recommendedForYou")}</h2>
+          <h2 className="text-xl font-semibold">
+            {t("dashboard.recommendedForYou")}
+          </h2>
           {recommendations.length === 0 ? (
             <p>{t("dashboard.noRecommendations")}</p>
           ) : (
@@ -75,5 +83,5 @@ export default function UserDashboard() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

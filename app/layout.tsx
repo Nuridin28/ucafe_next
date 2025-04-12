@@ -33,5 +33,9 @@ export default function RootLayout({
 }
 
 export const metadata = {
-  generator: "v0.dev",
+  title: "UCAFE",
+  description: "Онлайн-меню, заказ и больше.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
